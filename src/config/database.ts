@@ -3,10 +3,28 @@ import { config } from "./config";
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect(config.MONGO_URI, {});
-    console.log("MongoDB Connected");
-  } catch (err) {
-    console.error("MongoDB Connection Error:", err);
-    process.exit(1);
+    if (!config.MONGO_URI) {
+      throw new Error("MONGO_URI is not defined in environment variables.");
+    }
+
+    const connection = await mongoose.connect(config.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as any);
+
+    console.log(`✅ MongoDB Connected: ${connection.connection.host}`);
+  } catch (error: any) {
+    console.error(`❌ MongoDB Connection Error: ${error.message}`);
+    process.exit(1); // Exit process if connection fails
   }
 };
+
+// Handle MongoDB connection events
+mongoose.connection.on("disconnected", () => {
+  console.warn("⚠️ MongoDB disconnected. Reconnecting...");
+  connectDB();
+});
+
+mongoose.connection.on("error", (err) => {
+  console.error(`❌ MongoDB Error: ${err}`);
+});

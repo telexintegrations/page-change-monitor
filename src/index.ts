@@ -25,8 +25,7 @@ app.get("/integration.json", (req, res) => {
       descriptions: {
         app_name: "Website Change Monitor",
         app_description: "Monitors website content changes at intervals",
-        app_logo:
-          "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5KIpZ8m7Z3lL-nn0vFK9MuDAcVbu6W-vlLDmKr9TzKEqgEG3bwchzlGuoI8Apuxafvp3nNjp-ZDQswDsxA416UZ_cu_wJRJ1mBiJUbN_9D0Cs_UFp2dlw9_ro3qqIWeTbnkJKp39kpeoe/s1600/watchdog-01.jpg",
+        app_logo: "https://ibb.co/zWBZHZXd",
         app_url: baseUrl,
         background_color: "#fff",
       },

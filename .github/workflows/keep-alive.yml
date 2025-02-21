@@ -1,0 +1,20 @@
+name: Keep Render App Alive
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Render API to Keep It Alive
+        run: |
+          RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" "https://page-change-monitor.onrender.com/health")
+          if [[ "$RESPONSE_CODE" -ne 200 ]]; then
+            echo "Health check failed with status $RESPONSE_CODE"
+            exit 1
+          else
+            echo "API is alive"
+          fi

@@ -12,7 +12,51 @@ app.use(cors());
 app.use("/", routes);
 
 app.get("/integration.json", (req, res) => {
-  res.sendFile(__dirname + "/integration.json");
+  const baseUrl = `${
+    req.headers["x-forwarded-proto"] || req.protocol
+  }://${req.get("host")}`;
+
+  res.json({
+    data: {
+      date: {
+        created_at: "2025-02-19",
+        updated_at: "2025-02-19",
+      },
+      descriptions: {
+        app_name: "Website Change Monitor",
+        app_description: "Monitors website content changes at intervals",
+        app_logo:
+          "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5KIpZ8m7Z3lL-nn0vFK9MuDAcVbu6W-vlLDmKr9TzKEqgEG3bwchzlGuoI8Apuxafvp3nNjp-ZDQswDsxA416UZ_cu_wJRJ1mBiJUbN_9D0Cs_UFp2dlw9_ro3qqIWeTbnkJKp39kpeoe/s1600/watchdog-01.jpg",
+        app_url: baseUrl,
+        background_color: "#fff",
+      },
+      is_active: true,
+      integration_category: "Monitoring & Logging",
+      integration_type: "interval",
+      key_features: [
+        "Detects website content changes",
+        "Sends notifications to Telex channel",
+        "Runs at configured intervals",
+      ],
+      author: "David Umoru",
+      settings: [
+        {
+          label: "website_url",
+          type: "text",
+          required: true,
+          default: "https://example.com",
+        },
+        {
+          label: "interval",
+          type: "text",
+          required: true,
+          default: "*/5 * * * *",
+        },
+      ],
+      target_url: "",
+      tick_url: `${baseUrl}/tick`,
+    },
+  });
 });
 
 app.post("/tick", async (req, res): Promise<any> => {

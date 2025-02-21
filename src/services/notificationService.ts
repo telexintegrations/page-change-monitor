@@ -1,16 +1,18 @@
 import axios from "axios";
-import { config } from "../config/config";
 
-export const sendTelexNotification = async (message: string): Promise<void> => {
+export const sendTelexNotification = async (
+  returnUrl: string,
+  message: string
+): Promise<void> => {
   try {
     const data = {
-      event_name: "Website Monitor",
       message,
+      username: "Website Monitor",
+      event_name: "Website Change Detection",
       status: "success",
-      username: "Watchdog",
     };
 
-    const response = await axios.post(config.TELEX_WEBHOOK_URL, data, {
+    const response = await axios.post(returnUrl, data, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

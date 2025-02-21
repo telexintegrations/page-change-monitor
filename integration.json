@@ -1,0 +1,47 @@
+{
+    "data": {
+      "descriptions": {
+        "app_name": "Website Monitor",
+        "app_description": "Monitors website content changes at intervals",
+        "app_url": "https://your-hosted-url.com",
+        "app_logo": "https://your-hosted-url.com/logo.png",
+        "background_color": "#ffffff"
+      },
+      "integration_category": "Monitoring & Logging",
+      "integration_type": "interval",
+      "is_active": false,
+      "output": [
+        {
+          "label": "Telex Channel",
+          "value": true
+        }
+      ],
+      "key_features": [
+        "Detects website content changes",
+        "Sends notifications to Telex channel",
+        "Runs at configured intervals"
+      ],
+      "permissions": {
+        "monitoring_user": {
+          "always_online": true,
+          "display_name": "Website Monitor"
+        }
+      },
+      "settings": [
+        {
+          "label": "website_url",
+          "type": "text",
+          "required": true,
+          "default": "https://example.com"
+        },
+        {
+          "label": "interval",
+          "type": "text",
+          "required": true,
+          "default": "*/5 * * * *"
+        }
+      ],
+      "tick_url": "https://your-hosted-url.com/tick"
+    }
+  }
+  

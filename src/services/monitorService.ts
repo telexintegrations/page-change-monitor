@@ -2,11 +2,10 @@ import axios from "axios";
 import { diffWords } from "diff";
 import { Webpage } from "../models/webpage";
 import { sendTelexNotification } from "./notificationService";
-import { config } from "../config/config";
 
-export const checkWebsite = async () => {
+export const checkWebsite = async (url: string, returnUrl: string) => {
   try {
-    const response = await axios.get(config.URL_TO_CHECK);
+    const response = await axios.get(url);
     const newContent: string = response.data;
 
     if (!newContent) {
@@ -14,13 +13,10 @@ export const checkWebsite = async () => {
       return;
     }
 
-    const existingRecord = await Webpage.findOne({ url: config.URL_TO_CHECK });
+    const existingRecord = await Webpage.findOne({ url });
 
     if (!existingRecord) {
-      await new Webpage({
-        url: config.URL_TO_CHECK,
-        content: newContent,
-      }).save();
+      await new Webpage({ url, content: newContent }).save();
       console.log("First-time content stored.");
       return;
     }
@@ -41,7 +37,8 @@ export const checkWebsite = async () => {
 
       if (changes) {
         sendTelexNotification(
-          `🔥 Changes detected in ${config.URL_TO_CHECK}:\n${changes}`
+          returnUrl,
+          `🔥 Changes detected in ${url}:\n${changes}`
         );
       }
 
@@ -52,8 +49,4 @@ export const checkWebsite = async () => {
   } catch (error) {
     console.error(`Request Error: ${error}`);
   }
-};
-
-export const startMonitoring = () => {
-  setInterval(checkWebsite, config.CHECKING_FREQUENCY);
 };

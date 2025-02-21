@@ -3,8 +3,8 @@
       "descriptions": {
         "app_name": "Website Monitor",
         "app_description": "Monitors website content changes at intervals",
-        "app_url": "https://your-hosted-url.com",
-        "app_logo": "https://your-hosted-url.com/logo.png",
+        "app_url": "https://page-change-monitor.onrender.com",
+        "app_logo": "https://page-change-monitor.onrender.com/logo.png",
         "background_color": "#ffffff"
       },
       "integration_category": "Monitoring & Logging",
@@ -41,7 +41,7 @@
           "default": "*/5 * * * *"
         }
       ],
-      "tick_url": "https://your-hosted-url.com/tick"
+      "tick_url": "https://page-change-monitor.onrender.com/tick"
     }
   }
   

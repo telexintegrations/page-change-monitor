@@ -1,5 +1,5 @@
 {
-  "name": "page-change-monitor",
+  "name": "competitor-watchdog",
   "version": "1.0.0",
   "description": "Monitor competitor websites and get alerts whenever changes occur on their pages",
   "main": "src/index.js",

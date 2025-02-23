@@ -23,8 +23,9 @@ app.get("/integration.json", (req, res) => {
         updated_at: "2025-02-19",
       },
       descriptions: {
-        app_name: "Website Change Monitor",
-        app_description: "Monitors website content changes at intervals",
+        app_name: "Competitor Watchdog",
+        app_description:
+          "This integration monitors a website and alerts you whenever changes occur on that pages (e.g., updates to products, prices, content, etc.).",
         app_logo: "https://i.ibb.co/Q7TMjMP0/watchdog-01-1.jpg",
         app_url: baseUrl,
         background_color: "#fff",

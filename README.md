@@ -137,58 +137,45 @@ Triggered by Telex at configured intervals.
 
 ## Testing the Integration Locally
 
-### 1️⃣ Test `/tick` Manually
+1. **Start Your Local Server**  
+   Make sure the integration is running on `http://localhost:5000`.
 
-Use `curl` or Postman:
+2. **Trigger `/tick` Manually**  
+   Use `curl` (or an equivalent tool) to simulate Telex’s call to your `tick_url` endpoint:
 
-```bash
-curl --location 'http://localhost:5000/tick' \
---header 'Content-Type: application/json' \
---data '{
-    "return_url": "http://localhost:5000/webhook",
-    "settings": [
-        { "label": "website_url", "default": "https://example.com" }
-    ]
-}'
-```
+   ```bash
+   curl --location 'http://localhost:5000/tick' \
+   --header 'Content-Type: application/json' \
+   --data '{
+       "return_url": "https://ping.telex.im/v1/return/channel_id",
+       "settings": [
+           {
+               "label": "website_url",
+               "type": "text",
+               "required": true,
+               "default": "https://example.com"
+           }
+       ]
+   }'
+   ```
 
-### 2️⃣ Test Notifications with a Webhook
+   - **`return_url`**: Points to the Telex channel webhook where results are posted.
+   - **`settings`**: Contains parameters for the integration (e.g., site URL).
 
-Add a local webhook handler in `index.ts`:
+3. **Check the Response**  
+   - Your local server should respond with something like:
 
-```typescript
-app.post("/webhook", (req, res) => {
-  console.log("Telex Notification Received:", req.body);
-  res.status(200).json({ message: "Webhook received!" });
-});
-```
+     ```json
+     { "status": "accepted" }
+     ```
 
-Then send a test notification:
+   - Any changes or notifications triggered by your integration should appear in the specified Telex channel (the `return_url` you provided).
 
-```bash
-curl --location 'http://localhost:5000/webhook' \
---header 'Content-Type: application/json' \
---data '{
-    "message": "Test notification",
-    "username": "Website Monitor",
-    "event_name": "Test Event",
-    "status": "success"
-}'
-```
+4. **Observe Changes**  
+   - If you’re monitoring a website for changes, modify that site or choose one that updates frequently.
+   - Invoke `curl` again and check the Telex channel for any new messages or notifications.
 
-### 3️⃣ Expose Local Server to Telex
-
-Use **Ngrok** to expose `localhost:5000`:
-
-```bash
-ngrok http 5000
-```
-
-Copy the Ngrok URL and use it in `integration.json` for testing:
-
-```json
-"tick_url": "https://your-ngrok-url.ngrok.io/tick"
-```
+This approach works if you already have a functioning Telex channel and just want to verify your local integration’s flow with the real Telex environment.
 
 ## Deployment
 
